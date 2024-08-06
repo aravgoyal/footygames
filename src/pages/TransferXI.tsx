@@ -77,6 +77,7 @@ export function TransferXI() {
     return (
         <div>
             <h1>Transfer XI</h1>
+            <p>Goal: €1b</p>
             <div id="team-container">
                 <div className="position" data-position="LS">ST</div>
                 <div className="position" data-position="RS">ST</div>
