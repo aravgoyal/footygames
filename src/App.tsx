@@ -1,13 +1,22 @@
 import './App.css'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Home } from "./pages/Home.tsx";
+import { TransferXI } from "./pages/TransferXI.tsx"
+import { FootySidebar } from './Sidebar.tsx';
 
 function App() {
 
   return (
     <>
-      <h1>Footy Games</h1>
-      <p className="read-the-docs">
-        Take it take it take it
-      </p>
+      <BrowserRouter>
+        <div>
+        <FootySidebar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/transferxi" element={<TransferXI />} />
+        </Routes>
+        </div>
+      </BrowserRouter>
     </>
   )
 }

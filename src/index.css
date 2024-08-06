@@ -26,8 +26,8 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  width: 100%;
+  height: 100%;
 }
 
 h1 {
@@ -52,6 +52,92 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+#team-container {
+  display: grid;
+  grid-template-columns: repeat(4, 120px);
+  grid-template-rows: repeat(4, 120px);
+  justify-items: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Strikers */
+.position:nth-child(1) {
+  grid-column: 2;
+  grid-row: 1;
+}
+.position:nth-child(2) {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+/* Midfielders */
+.position:nth-child(3) {
+  grid-column: 1;
+  grid-row: 2;
+}
+.position:nth-child(4) {
+  grid-column: 2;
+  grid-row: 2;
+}
+.position:nth-child(5) {
+  grid-column: 3;
+  grid-row: 2;
+}
+.position:nth-child(6) {
+  grid-column: 4;
+  grid-row: 2;
+}
+
+/* Defenders */
+.position:nth-child(7) {
+  grid-column: 1;
+  grid-row: 3;
+}
+.position:nth-child(8) {
+  grid-column: 2;
+  grid-row: 3;
+}
+.position:nth-child(9) {
+  grid-column: 3;
+  grid-row: 3;
+}
+.position:nth-child(10) {
+  grid-column: 4;
+  grid-row: 3;
+}
+
+/* Goalkeeper */
+.position:nth-child(11) {
+  grid-column: 2 / span 2;
+  grid-row: 4;
+}
+
+.position {
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #505050;
+}
+
+.position.filled {
+  background-color: #1e7c1e;
+  cursor: not-allowed;
+}
+
+.sidebar {
+  width: 100%;
+  position: relative;
+}
+
+#current-player {
+  margin-top: 20px;
+  font-size: 36px;
+  font-weight: bold;
+  width: 100%;
 }
 
 @media (prefers-color-scheme: light) {
