@@ -5,6 +5,7 @@ import { TransferXI } from "./pages/TransferXI.tsx"
 import { FootySidebar } from './Sidebar.tsx';
 import { FiveASide } from './pages/FiveASide.tsx';
 import { BlindRank } from './pages/BlindRank.tsx';
+import { WhoScored } from './pages/GuessTheGoal.tsx';
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/transferxi" element={<TransferXI />} />
           <Route path="/fiveaside" element={<FiveASide />} />
           <Route path="/blindrank" element={<BlindRank />} />
+          <Route path="/whoscored" element={<WhoScored />} />
         </Routes>
         </div>
       </BrowserRouter>

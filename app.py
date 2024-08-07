@@ -115,5 +115,17 @@ def blindrank():
         j += 1
     return res
 
+@app.route('/api/whoscored', methods=["GET", "POST"])
+def whoscored():
+    res = {}
+    res["Kevin de Bruyne"] = "https://www.youtube.com/embed/Ml5PNPdDInI?si=uENiBNO2kOC4eYeR&amp;controls=0"
+    return jsonify(res)
+
+@app.route('/api/playernames', methods=["GET", "POST"])
+def playernames():
+    df = pd.read_csv("src/assets/eafc25top100.csv")
+    players = df["Name"]
+    return list(players)
+
 if __name__ == "__main__":
     app.run(port=3000)

@@ -18,6 +18,7 @@ export function FootySidebar() {
             <MenuItem component={<Link to="/transferxi" />}>Transfer XI</MenuItem>
             <MenuItem component={<Link to="/fiveaside" />}>Five-A-Side</MenuItem>
             <MenuItem component={<Link to="/blindrank" />}>Blind Rank</MenuItem>
+            <MenuItem component={<Link to="/whoscored" />}>Who Scored?</MenuItem>
             </Menu>
         </Sidebar>
       </div>

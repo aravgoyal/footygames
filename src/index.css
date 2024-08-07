@@ -145,6 +145,10 @@ button:focus-visible {
   cursor: not-allowed;
 }
 
+button.over {
+  cursor: not-allowed;
+}
+
 .pos51 {
   padding: 20px;
   padding-left: 40px;
