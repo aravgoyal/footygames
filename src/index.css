@@ -54,6 +54,23 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+#blindrank-container {
+  display: grid;
+  grid-template-rows: repeat(5, 120px);
+  justify-items: center;
+  align-items: center;
+  width: 100%;
+}
+
+#fiveaside-container {
+  display: grid;
+  grid-template-columns: repeat(5, 240px);
+  grid-template-rows: repeat(2, 240px);
+  justify-items: center;
+  align-items: center;
+  width: 100%;
+}
+
 #team-container {
   display: grid;
   grid-template-columns: repeat(4, 120px);
@@ -125,6 +142,50 @@ button:focus-visible {
 
 .position.filled {
   background-color: #1e7c1e;
+  cursor: not-allowed;
+}
+
+.pos51 {
+  padding: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+  margin: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #b92323;
+}
+
+.pos52 {
+  padding: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+  margin: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #505050;
+}
+
+.pos52.filled {
+  cursor: not-allowed;
+}
+
+.rank {
+  padding: 20px;
+  padding-left: 160px;
+  padding-right: 160px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #505050;
+  width: 160px;
+  height: 20px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.rank.filled {
   cursor: not-allowed;
 }
 

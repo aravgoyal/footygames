@@ -9,6 +9,7 @@ interface Player {
 
 export function TransferXI() {
     let totalValue = 0;
+    let count = 0;
     let availablePlayers: Player[] = [];
     let currentPlayer: Player | null = null;
     const positionsFilled: Set<string> = new Set();
@@ -34,8 +35,15 @@ export function TransferXI() {
         currentPlayer = availablePlayers.shift() || null;
 
         const currentPlayerDisplay = document.getElementById('current-player') as HTMLDivElement;
+        const totalValueDisplay = document.getElementById('value-display') as HTMLTextAreaElement;
+        
         if (currentPlayer) {
             currentPlayerDisplay.textContent = currentPlayer.name;
+        }
+
+        if (count == 11) {
+            currentPlayerDisplay.textContent = "€" + totalValue.toString() + "m"
+            totalValueDisplay.textContent = ""
         }
     };
 
@@ -54,6 +62,8 @@ export function TransferXI() {
 
         const totalValueDisplay = document.getElementById('total-value') as HTMLSpanElement;
         totalValueDisplay.textContent = totalValue.toString();
+        
+        count += 1;
 
         generatePlayer();
 
@@ -92,7 +102,7 @@ export function TransferXI() {
                 <div className="position" data-position="GK">GK</div>
             </div>
             <div id="current-player"></div>
-            <h2>
+            <h2 id="value-display">
                 Team Value: €<span id="total-value">0</span>m
             </h2>
         </div>
