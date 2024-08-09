@@ -9,75 +9,99 @@ interface Player {
 
 export function TransferXI() {
     let totalValue = 0;
-    let count = 0;
-    let availablePlayers: Player[] = [];
-    let currentPlayer: Player | null = null;
-    const positionsFilled: Set<string> = new Set();
+    let positionIndex = 0;
+    let availablePlayers: Player[][] = [];
+    let currentPlayers: Player[] | null = [];
+    const positions: Element[] = [];
+    let currentPosition: Element | null = null;
 
-    const fetchPlayers = async (): Promise<Player[]> => {
+    const positionOrder = [
+        "GK", "LCB", "RCB", "LB", "RB", 
+        "LCM", "RCM", "LM", "RM", 
+        "LS", "RS"
+    ];
+
+    const fetchPlayers = async (): Promise<Player[][]> => {
         try {
             const response = await axios.get('http://127.0.0.1:3000/api/transferxi');
-            const playersData = response.data;
+            const playersData: { [key: string]: [string, number] } = response.data;
 
-            const players: Player[] = Object.keys(playersData).map(name => ({
-                name,
-                value: playersData[name],
+            const players: Player[] = Object.values(playersData).map((data: [string, number]) => ({
+                name: data[0],
+                value: data[1],
             }));
 
-            return players;
+            const playerGroups: Player[][] = [];
+
+            for (let i = 0; i < players.length; i += 3) {
+                playerGroups.push(players.slice(i, i + 3));
+            }
+
+            return playerGroups;
         } catch (error) {
             console.error('Error fetching players:', error);
             return [];
         }
     };
 
-    const generatePlayer = () => {
-        currentPlayer = availablePlayers.shift() || null;
+    const generatePlayerOptions = () => {
+        currentPlayers = availablePlayers.shift() || null;
+        currentPosition = positions[positionIndex] || null;
+        currentPosition.classList.add("current")
+        const currentPlayersDisplay = document.querySelectorAll('.option');
 
-        const currentPlayerDisplay = document.getElementById('current-player') as HTMLDivElement;
-        const totalValueDisplay = document.getElementById('value-display') as HTMLTextAreaElement;
-        
-        if (currentPlayer) {
-            currentPlayerDisplay.textContent = currentPlayer.name;
-        }
-
-        if (count == 11) {
-            currentPlayerDisplay.textContent = "€" + totalValue.toString() + "m"
-            totalValueDisplay.textContent = ""
+        if (currentPlayers) {
+            currentPlayers.forEach((player, index) => {
+                const element = currentPlayersDisplay[index];
+                if (element) {
+                    element.textContent = player.name;
+                    element.setAttribute('data-player-index', index.toString());
+                }
+            });
+        } else if (positionIndex == 1) {
+            currentPlayersDisplay.forEach(element => element.classList.add("hide"));
         }
     };
 
-    const placePlayer = (event: Event) => {
+    const choosePlayer = (event: Event) => {
         const target = event.target as HTMLDivElement;
-        const position = target.dataset.position;
+        const playerIndex = target.getAttribute('data-player-index');
 
-        if (!currentPlayer || target.classList.contains('filled') || !position) {
+        if (!currentPlayers || playerIndex === null || !currentPosition) {
             return;
         }
 
-        target.textContent = `€${currentPlayer.value}m`;
-        target.classList.add('filled');
-        positionsFilled.add(position);
-        totalValue += currentPlayer.value;
+        const selectedPlayer = currentPlayers[parseInt(playerIndex)];
+        currentPosition.textContent = `€${selectedPlayer.value}m`;
+        currentPosition.classList.add('filled');
+        currentPosition.classList.remove("selected");
+
+        totalValue += selectedPlayer.value;
 
         const totalValueDisplay = document.getElementById('total-value') as HTMLSpanElement;
         totalValueDisplay.textContent = totalValue.toString();
-        
-        count += 1;
 
-        generatePlayer();
-
+        positionIndex += 1;
+        generatePlayerOptions();
     };
 
     const initializeGame = async () => {
         availablePlayers = await fetchPlayers();
-        const positions = document.querySelectorAll('.position');
+        const positionNodeList = document.querySelectorAll('.position');
 
-        positions.forEach((position) => {
-            position.addEventListener('click', placePlayer);
+        positionOrder.forEach((position, index) => {
+            const positionElement = Array.from(positionNodeList).find(node => node.getAttribute('data-position') === position);
+            if (positionElement) {
+                positions[index] = positionElement;
+            }
         });
 
-        generatePlayer();
+        const options = document.querySelectorAll('.option');
+        options.forEach((option) => {
+            option.addEventListener('click', choosePlayer);
+        });
+
+        generatePlayerOptions();
     };
 
     useEffect(() => {
@@ -85,7 +109,7 @@ export function TransferXI() {
     }, []);
 
     return (
-        <div>
+        <div className='transferxi'>
             <h1>Transfer XI</h1>
             <p>Goal: €1b</p>
             <div id="team-container">
@@ -101,7 +125,11 @@ export function TransferXI() {
                 <div className="position" data-position="RB">RB</div>
                 <div className="position" data-position="GK">GK</div>
             </div>
-            <div id="current-player"></div>
+            <div id="players-container">
+                <div className="option" data-option="1">Loading...</div>
+                <div className="option" data-option="2">Loading...</div>
+                <div className="option" data-option="3">Loading...</div>
+            </div>
             <h2 id="value-display">
                 Team Value: €<span id="total-value">0</span>m
             </h2>

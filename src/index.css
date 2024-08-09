@@ -78,6 +78,19 @@ button:focus-visible {
   justify-items: center;
   align-items: center;
   width: 100%;
+  margin-left: 23%;
+}
+
+#players-container {
+  display: grid;
+  grid-template-columns: repeat(3, 300px);
+  grid-template-rows: 1;
+  justify-items: center;
+  align-items: center;
+}
+
+.hide {
+  display: none;
 }
 
 /* Strikers */
@@ -133,16 +146,38 @@ button:focus-visible {
 }
 
 .position {
+  transition: linear 0.5s;
   padding: 20px;
   border: 2px solid #ccc;
   border-radius: 5px;
-  cursor: pointer;
   background-color: #505050;
 }
 
+.position.current {
+  transition: linear 0.5s;
+  background-color: #818181;
+}
+
 .position.filled {
+  transition: linear 0.5s;
   background-color: #1e7c1e;
-  cursor: not-allowed;
+}
+
+.option {
+  transition: linear 0.5s;
+  padding: 20px;
+  margin: 10px;
+  border: 2px solid #999999;
+  border-radius: 5px;
+  background-color: #521697;
+  width: 180px;
+  cursor: pointer;
+}
+
+.option:hover {
+  transition: linear 0.2s;
+  background-color: #370f64;
+  border-color: #ccc;
 }
 
 button.over {
@@ -176,6 +211,7 @@ button.over {
 }
 
 .rank {
+  transition: linear 0.5s;
   padding: 20px;
   padding-left: 160px;
   padding-right: 160px;
@@ -189,7 +225,17 @@ button.over {
   overflow: hidden;
 }
 
+.rank:hover {
+  transition: linear 0.2s;
+  background-color: #3a3a3a;
+}
+
 .rank.filled {
+  cursor: not-allowed;
+  background-color: #3a3a3a;
+}
+
+.rank.filled:hover {
   cursor: not-allowed;
 }
 

@@ -8,16 +8,50 @@ cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 @app.route('/api/transferxi', methods=["GET", "POST"])
 def transferxi():
-    df = pd.read_csv("src/assets/transfer-values.csv")
+    st = pd.read_csv("src/assets/transfer-valuesST.csv")
+    w = pd.read_csv("src/assets/transfer-valuesW.csv")
+    cm = pd.read_csv("src/assets/transfer-valuesCM.csv")
+    fb = pd.read_csv("src/assets/transfer-valuesFB.csv")
+    cb = pd.read_csv("src/assets/transfer-valuesCB.csv")
+    gk = pd.read_csv("src/assets/transfer-valuesGK.csv")
     res = {}
     indices = []
-    while len(indices) < 11:
-        index = random.randint(0, 249)
+    while len(indices) < 3:
+        index = random.randint(0, len(gk) - 1)
         if index not in indices:
             indices.append(index)
-    for i in indices:
-        data = df.iloc[i]
-        res[data["Name"]] = data["Value"]
+            data = gk.iloc[index]
+            res[len(indices)] = [data["Name"], data["Value"]]
+    while len(indices) < 9:
+        index = random.randint(0, len(cb) - 1)
+        if index not in indices:
+            indices.append(index)
+            data = cb.iloc[index]
+            res[len(indices)] = [data["Name"], data["Value"]]
+    while len(indices) < 15:
+        index = random.randint(0, len(fb) - 1)
+        if index not in indices:
+            indices.append(index)
+            data = fb.iloc[index]
+            res[len(indices)] = [data["Name"], data["Value"]]
+    while len(indices) < 21:
+        index = random.randint(0, len(cm) - 1)
+        if index not in indices:
+            indices.append(index)
+            data = cm.iloc[index]
+            res[len(indices)] = [data["Name"], data["Value"]]
+    while len(indices) < 27:
+        index = random.randint(0, len(w) - 1)
+        if index not in indices:
+            indices.append(index)
+            data = w.iloc[index]
+            res[len(indices)] = [data["Name"], data["Value"]]
+    while len(indices) < 33:
+        index = random.randint(0, len(st) - 1)
+        if index not in indices:
+            indices.append(index)
+            data = st.iloc[index]
+            res[len(indices)] = [data["Name"], data["Value"]]
     return jsonify(res)
 
 @app.route('/api/fiveaside', methods=["GET", "POST"])
@@ -32,7 +66,7 @@ def fiveaside():
     valid_att = ["ST", "LW", "RW", "CAM", "CM", "CF", "LM", "RM"]
     valid_def = ["LB", "RB", "CB", "CDM", "LWB", "RWB", "CM", "LM", "RM"]
     while len(atts) < 4 or len(defs) < 4 or len(gks) < 2:
-        index = random.randint(0, 99)
+        index = random.randint(0, 98)
         if index not in defs and index not in atts and df.iloc[index]["Position"] in valid_def and len(atts) < 4:
             defs.append(index)
         elif index not in atts and index not in defs and df.iloc[index]["Position"] in valid_att and len(atts) < 4:

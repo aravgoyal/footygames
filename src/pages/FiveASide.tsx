@@ -9,6 +9,8 @@ interface Game {
     score: string;
 }
 
+// IMPLEMENT CHOICES
+
 export function FiveASide() {
     let count = 0
     let availablePlayers: string[] = [];

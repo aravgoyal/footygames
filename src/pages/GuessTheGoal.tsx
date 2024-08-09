@@ -86,7 +86,9 @@ export function WhoScored() {
             </div>
             <h2>Lives: <span id="lives"></span></h2>
             <input type="search" list="mylist" id="guess"></input>
-            <datalist id="playerlist" />
+            <datalist id="playerlist">
+            <option value="Dany Urizar" />
+            </datalist>
             <button id="submit" onClick={submit}>Guess</button>
             <h2><span id="result"></span></h2>
         </div>
