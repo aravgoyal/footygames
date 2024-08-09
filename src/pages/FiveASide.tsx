@@ -4,34 +4,21 @@ import { useEffect } from 'react';
 
 interface Game {
     team1: string[];
-    team2: string[];
+    team2: string[][];
     result: string;
     score: string;
 }
 
-// IMPLEMENT CHOICES
-
 export function FiveASide() {
-    let count = 0
-    let availablePlayers: string[] = [];
-    let currentPlayer: string | null = null;
+    let positionIndex = 0;
+    let availablePlayers: string[][] = [];
+    let currentPlayers: string[] | null = null;
+    const selectedPlayers: string[] = []
     let game: Game | null = null;
-    const positionsFilled: Set<string> = new Set();
+    const positions: Element[] = [];
+    let currentPosition: Element | null = null;
 
-    const shuffle = (array: string[]): string[] => {
-        let currentIndex = array.length,  randomIndex;
-    
-        while (currentIndex != 0) {
-      
-          randomIndex = Math.floor(Math.random() * currentIndex);
-          currentIndex--;
-      
-          [array[currentIndex], array[randomIndex]] = [
-            array[randomIndex], array[currentIndex]];
-        }
-      
-        return array;
-    };
+    const positionOrder = ["ATT1_2", "ATT2_2", "DEF1_2", "DEF2_2", "GK2"];
 
     const fetchPlayers = async (): Promise<Game> => {
         try {
@@ -39,8 +26,14 @@ export function FiveASide() {
             const gameData = response.data;
 
             const currentGame: Game = {
-                team1: [gameData["ATT1_1"], gameData["ATT1_2"], gameData["DEF1_1"], gameData["DEF1_2"], gameData["GK1"]],
-                team2: shuffle([gameData["ATT2_1"], gameData["ATT2_2"], gameData["DEF2_1"], gameData["DEF2_2"], gameData["GK2"]]),
+                team1: [gameData["ATT1_1"], gameData["ATT1_2"], gameData["DEF1_1"], gameData["DEF1_2"], gameData["GK1_1"]],
+                team2: [
+                    [gameData.ATT2_1, gameData.ATT2_2, gameData.ATT2_3],
+                    [gameData.ATT2_4, gameData.ATT2_5, gameData.ATT2_6],
+                    [gameData.DEF2_1, gameData.DEF2_2, gameData.DEF2_3],
+                    [gameData.DEF2_4, gameData.DEF2_5, gameData.DEF2_6],
+                    [gameData.GK2_1, gameData.GK2_2, gameData.GK2_3]
+                ],
                 result: gameData["Result"],
                 score: gameData["Score"]
             }
@@ -60,52 +53,99 @@ export function FiveASide() {
         }
     }
 
-    const generatePlayer = () => {
-        currentPlayer = availablePlayers.shift() || null;
+    const fetchScore = async (): Promise<string> => {
+        const team2 = document.querySelectorAll(".pos52")
+        team2.forEach((element) => {
+            const player = element.textContent || ""; 
+            selectedPlayers.push(player);
+        })
+        return axios.post('http://127.0.0.1:3000/api/fiveasidescore', { selectedPlayers })
+            .then(response => {
+                return response.data
+            });
+    }
 
-        const currentPlayerDisplay = document.getElementById('current-player') as HTMLDivElement;
-        if (currentPlayer) {
-            currentPlayerDisplay.textContent = currentPlayer;
-        } else if (game || count == 5) {
-            currentPlayerDisplay.textContent = game?.score + " " + game?.result
+    const generatePlayers = async () => {
+        if (positionIndex < positions.length) {
+            currentPlayers = availablePlayers.shift() || null;
+            currentPosition = positions[positionIndex] || null;
+
+            if (currentPosition) {
+                currentPosition.classList.add("current");
+            }
+
+            const currentPlayersDisplay = document.querySelectorAll('.option');
+
+            if (currentPlayers) {
+                currentPlayers.forEach((player, index) => {
+                    const element = currentPlayersDisplay[index];
+                    if (element) {
+                        element.textContent = player;
+                        element.setAttribute('data-player-index', index.toString());
+                    }
+                });
+            }
+        } else {
+            const resultDisplay = document.getElementById("result");
+            if (resultDisplay) {
+                resultDisplay.textContent = "Loading...";
+            }
+            const options = document.querySelectorAll('.option');
+            options.forEach((option) => {
+                option.removeEventListener('click', choosePlayer);
+            });
+
+            const result = await fetchScore();
+            if (resultDisplay) {
+                resultDisplay.textContent = result;
+            }
         }
     };
 
-    const placePlayer = (event: Event) => {
+    const choosePlayer = (event: Event) => {
         const target = event.target as HTMLDivElement;
-        const position = target.dataset.position;
+        const playerIndex = target.getAttribute('data-player-index');
 
-        if (!currentPlayer || target.classList.contains('filled') || !position) {
+        if (!currentPlayers || playerIndex === null || !currentPosition) {
             return;
         }
 
-        target.textContent = currentPlayer;
-        target.classList.add('filled');
-        positionsFilled.add(position);
-        count += 1;
+        const selectedPlayer = currentPlayers[parseInt(playerIndex)];
+        currentPosition.textContent = selectedPlayer;
+        currentPosition.classList.add('filled');
+        currentPosition.classList.remove("selected");
 
-        generatePlayer();
-
+        positionIndex += 1;
+        generatePlayers();
     };
 
     const initializeGame = async () => {
         game = await fetchPlayers();
         availablePlayers = game.team2;
 
-        let opponent: string = "Player"
+        const positionNodeList = document.querySelectorAll('.pos52');
 
+        positionOrder.forEach((position, index) => {
+            const positionElement = Array.from(positionNodeList).find(node => node.getAttribute('data-position') === position);
+            if (positionElement) {
+                positions[index] = positionElement;
+            }
+        });
+
+        let opponent: string = "Player"
         const team1pos = document.querySelectorAll('.pos51');
         team1pos.forEach((position) => {
             opponent = game?.team1.shift() || "Player"
+            selectedPlayers.push(opponent);
             position.textContent = opponent;
         });
 
-        const positions = document.querySelectorAll('.pos52');
-        positions.forEach((position) => {
-            position.addEventListener('click', placePlayer);
+        const options = document.querySelectorAll('.option');
+        options.forEach((option) => {
+            option.addEventListener('click', choosePlayer);
         });
 
-        generatePlayer();
+        generatePlayers();
     };
 
     useEffect(() => {
@@ -122,13 +162,18 @@ export function FiveASide() {
                 <div className="pos51" data-position="DEF1_1">Loading...</div>
                 <div className="pos51" data-position="DEF2_1">Loading...</div>
                 <div className="pos51" data-position="GK1">Loading...</div>
-                <div className="pos52" data-position="ATT1_2">FW</div>
-                <div className="pos52" data-position="ATT2_2">FW</div>
-                <div className="pos52" data-position="DEF1_2">DEF</div>
-                <div className="pos52" data-position="DEF2_2">DEF</div>
+                <div className="pos52" data-position="ATT1_2">+</div>
+                <div className="pos52" data-position="ATT2_2">+</div>
+                <div className="pos52" data-position="DEF1_2">+</div>
+                <div className="pos52" data-position="DEF2_2">+</div>
                 <div className="pos52" data-position="GK2">GK</div>
             </div>
-            <div id="current-player"></div>
+            <div id="players-container-fiveaside">
+                <div className="option" data-option="1">Loading...</div>
+                <div className="option" data-option="2">Loading...</div>
+                <div className="option" data-option="3">Loading...</div>
+            </div>
+            <h2 id="result"></h2>
         </div>
     );
 }

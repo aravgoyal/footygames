@@ -65,13 +65,13 @@ def fiveaside():
     total2 = 0
     valid_att = ["ST", "LW", "RW", "CAM", "CM", "CF", "LM", "RM"]
     valid_def = ["LB", "RB", "CB", "CDM", "LWB", "RWB", "CM", "LM", "RM"]
-    while len(atts) < 4 or len(defs) < 4 or len(gks) < 2:
+    while len(atts) < 8 or len(defs) < 8 or len(gks) < 4:
         index = random.randint(0, 98)
-        if index not in defs and index not in atts and df.iloc[index]["Position"] in valid_def and len(atts) < 4:
+        if index not in defs and index not in atts and df.iloc[index]["Position"] in valid_def and len(atts) < 8:
             defs.append(index)
-        elif index not in atts and index not in defs and df.iloc[index]["Position"] in valid_att and len(atts) < 4:
+        elif index not in atts and index not in defs and df.iloc[index]["Position"] in valid_att and len(atts) < 8:
             atts.append(index)
-        elif index not in gks and df.iloc[index]["Position"] == "GK" and len(gks) < 2:
+        elif index not in gks and df.iloc[index]["Position"] == "GK" and len(gks) < 4:
             gks.append(index)
     num = 1
     for i in atts[:2]:
@@ -86,33 +86,52 @@ def fiveaside():
         total1 += int(data["Rating"])
         num += 1
     data = df.iloc[gks[0]]
-    res["GK1"] = data["Name"]
+    res["GK1_1"] = data["Name"]
     total1 += int(data["Rating"])
 
     num = 1
-    for i in atts[-2:]:
+    for i in atts[-6:]:
         data = df.iloc[i]
         res["ATT2_" + str(num)] = data["Name"]
         total2 += int(data["Rating"])
         num += 1
     num = 1
-    for i in defs[-2:]:
+    for i in defs[-6:]:
         data = df.iloc[i]
         res["DEF2_" + str(num)] = data["Name"]
         total2 += int(data["Rating"])
         num += 1
-    data = df.iloc[gks[1]]
-    res["GK2"] = data["Name"]
-    total2 += int(data["Rating"])
+    num = 1
+    for i in gks[-3:]:
+        data = df.iloc[i]
+        res["GK2_" + str(num)] = data["Name"]
+        total2 += int(data["Rating"])
+        num += 1
 
+    return jsonify(res)
+
+@app.route("/api/fiveasidescore", methods=["GET", "POST"])
+def fiveasidescore():
+    ratings = []
+    if request.method == "POST":
+        data = list(request.get_json()["selectedPlayers"])
+    else:
+        data = ["Rodri", "Rodri", "Rodri", "Rodri", "Rodri", "Rodri", "Rodri", "Rodri", "Rodri", "Rodri"]
+    df = pd.read_csv("src/assets/eafc25top100.csv")
+    for player in data:
+        rating = df.loc[df["Name"] == player]["Rating"]
+        ratings.append(int(rating))
+
+    total1 = sum(ratings[:5])
+    total2 = sum(ratings[-5:])
     diff = abs(total1 - total2)
 
     if diff <= 2:
-        res["Result"] = "Draw"
+        res = "Draw"
     elif total1 < total2:
-        res["Result"] = "Win"
+        res = "Win"
     else:
-        res["Result"] = "Loss"
+        res = "Loss"
 
     winner = random.randint(1, 5)
 
@@ -128,9 +147,7 @@ def fiveaside():
         winner = random.randint(4, 6)
         loser = 0
 
-    res["Score"] = f"{winner} - {loser}"
-
-    return jsonify(res)
+    return f"{winner}-{loser} " + res
 
 @app.route('/api/blindrank', methods=["GET", "POST"])
 def blindrank():

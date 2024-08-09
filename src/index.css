@@ -81,7 +81,16 @@ button:focus-visible {
   margin-left: 23%;
 }
 
-#players-container {
+#players-container-fiveaside {
+  display: grid;
+  grid-template-columns: repeat(3, 300px);
+  grid-template-rows: 1;
+  justify-items: center;
+  align-items: center;
+  margin-left: 12%;
+}
+
+#players-container-transferxi {
   display: grid;
   grid-template-columns: repeat(3, 300px);
   grid-template-rows: 1;
@@ -191,23 +200,30 @@ button.over {
   margin: 10px;
   border: 2px solid #ccc;
   border-radius: 5px;
-  cursor: pointer;
   background-color: #b92323;
+  width: 140px
 }
 
 .pos52 {
+  transition: linear 0.5s;
   padding: 20px;
   padding-left: 40px;
   padding-right: 40px;
   margin: 10px;
   border: 2px solid #ccc;
   border-radius: 5px;
-  cursor: pointer;
   background-color: #505050;
+  width: 140px;
+}
+
+.pos52.current {
+  transition: linear 0.5s;
+  background-color: #8d8d8d;
 }
 
 .pos52.filled {
-  cursor: not-allowed;
+  transition: linear 0.5s;
+  background-color: #0f199c;
 }
 
 .rank {

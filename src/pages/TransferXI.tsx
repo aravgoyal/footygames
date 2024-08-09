@@ -58,9 +58,7 @@ export function TransferXI() {
                     element.setAttribute('data-player-index', index.toString());
                 }
             });
-        } else if (positionIndex == 1) {
-            currentPlayersDisplay.forEach(element => element.classList.add("hide"));
-        }
+        } 
     };
 
     const choosePlayer = (event: Event) => {
@@ -125,7 +123,7 @@ export function TransferXI() {
                 <div className="position" data-position="RB">RB</div>
                 <div className="position" data-position="GK">GK</div>
             </div>
-            <div id="players-container">
+            <div id="players-container-transferxi">
                 <div className="option" data-option="1">Loading...</div>
                 <div className="option" data-option="2">Loading...</div>
                 <div className="option" data-option="3">Loading...</div>
