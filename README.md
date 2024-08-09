@@ -25,7 +25,7 @@ Welcome to **Footy Games**! This platform offers a variety of fun and challengin
   - Rank each player on a scale, but beware, you can’t change the rank once it's placed.
   - After all five players are ranked, see how close you got to the correct order.
 
-### 4. **Guess the Scorer**
+### 4. **Who Scored?**
 - **Objective**: Identify the player who scored a goal in a video with a filter obscuring the players' identities.
 - **Instructions**:
   - Watch the filtered video of the goal.
@@ -46,52 +46,29 @@ git clone https://github.com/your-username/footy-games.git
 ```
 ### Step 2: Set Up the Backend
 
-1. Navigate to the backend directory:
+1. Install the required Python packages
+   
+2. Run the Flask backend:
     ```bash
-    cd backend
-    ```
-2. Create a virtual environment (optional but recommended):
-    ```bash
-    python -m venv venv
-    ```
-3. Activate the virtual environment:
-    - On Windows:
-      ```bash
-      venv\Scripts\activate
-      ```
-    - On macOS/Linux:
-      ```bash
-      source venv/bin/activate
-      ```
-4. Install the required Python packages:
-    ```bash
-    pip install -r requirements.txt
-    ```
-5. Run the Flask backend:
-    ```bash
-    flask run
+    python app.py
     ```
 
 ### Step 3: Set Up the Frontend
 
-1. Navigate to the frontend directory:
-    ```bash
-    cd frontend
-    ```
-2. Install the required npm packages:
+1. Install the required npm packages:
     ```bash
     npm install
     ```
-3. Run the React frontend:
+2. Run the React frontend:
     ```bash
-    npm start
+    npm run dev
     ```
 
 ### Step 4: Access the Application
 
 Once both the frontend and backend are running, open your web browser and navigate to:
 ```bash
-http://localhost:3000
+http://localhost:5173
 ```
 
 This will open the Footy Games platform, where you can start playing the games.
