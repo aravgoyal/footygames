@@ -59,7 +59,6 @@ button:focus-visible {
   grid-template-rows: repeat(5, 120px);
   justify-items: center;
   align-items: center;
-  width: 100%;
 }
 
 #fiveaside-container {
@@ -68,7 +67,6 @@ button:focus-visible {
   grid-template-rows: repeat(2, 240px);
   justify-items: center;
   align-items: center;
-  width: 100%;
 }
 
 #team-container {
@@ -167,9 +165,28 @@ button:focus-visible {
   background-color: #818181;
 }
 
-.position.filled {
+.position.filled1 {
   transition: linear 0.5s;
-  background-color: #1e7c1e;
+  background-color: #4ca550;
+}
+
+.position.filled2 {
+  transition: linear 0.5s;
+  background-color: #2fa535;
+}
+
+.position.filled3 {
+  transition: linear 0.5s;
+  background-color: #1aa721;
+}
+
+.position.filled4 {
+  transition: linear 0.5s;
+  background-color: #6b15a5;
+}
+
+.home {
+  width: 209vh;
 }
 
 .option {

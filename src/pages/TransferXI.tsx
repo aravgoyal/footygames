@@ -7,6 +7,8 @@ interface Player {
     value: number;
 }
 
+// change color based on value
+
 export function TransferXI() {
     let totalValue = 0;
     let positionIndex = 0;
@@ -71,7 +73,15 @@ export function TransferXI() {
 
         const selectedPlayer = currentPlayers[parseInt(playerIndex)];
         currentPosition.textContent = `€${selectedPlayer.value}m`;
-        currentPosition.classList.add('filled');
+        if (selectedPlayer.value <= 40) {
+            currentPosition.classList.add('filled1');
+        } else if (selectedPlayer.value < 60) {
+            currentPosition.classList.add('filled2');
+        } else if (selectedPlayer.value < 100) {
+            currentPosition.classList.add('filled3');
+        } else {
+            currentPosition.classList.add('filled4');
+        }
         currentPosition.classList.remove("selected");
 
         totalValue += selectedPlayer.value;
