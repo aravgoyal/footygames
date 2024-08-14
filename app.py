@@ -5,6 +5,7 @@ from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from bs4 import BeautifulSoup
 import requests
+from datetime import datetime
 
 app = Flask(__name__)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
@@ -13,6 +14,7 @@ uri = "mongodb+srv://aravgoyal:9bEm16wiXThGu7Ac@footygames.jwayt.mongodb.net/?re
 client = MongoClient(uri, server_api=ServerApi('1'))
 db = client["footygames"]
 eafc = db["eafctop100"]
+videos = db["videos"]
 transfer = db["transfervalues"]
 
 @app.route('/api/transferxi', methods=["GET", "POST"])
@@ -176,9 +178,14 @@ def blindrank():
 
 @app.route('/api/whoscored', methods=["GET", "POST"])
 def whoscored():
-    res = {}
-    res["Kevin de Bruyne"] = "https://www.youtube.com/embed/Ml5PNPdDInI?si=uENiBNO2kOC4eYeR&amp;controls=0"
-    return jsonify(res)
+    today = datetime.now()
+    day_num = today.timetuple().tm_yday
+    data = list(videos.find({}))
+    vids = len(data)
+    index = day_num % vids
+    video = data[index]
+    video["_id"] = str(video["_id"])
+    return video
 
 # @app.route('/api/playernames', methods=["GET", "POST"])
 # def playernames():

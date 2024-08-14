@@ -54,6 +54,48 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.result-whoscored {
+  opacity: 0;
+  transition: opacity 1s ease-in;
+}
+
+.hint {
+  padding: 20px;
+  margin: 20px;
+  border: 2px solid #999999;
+  border-radius: 5px;
+  background-color: #521697;
+  width: 90px;
+}
+
+.fade-in {
+  opacity: 0;
+  transition: opacity 1s ease-in;
+  padding: 20px;
+  margin: 10px;
+  border: 2px solid #999999;
+  border-radius: 5px;
+  background-color: #521697;
+  width: 90px;
+}
+
+.fade-in.visible {
+  opacity: 1;
+}
+
+.result-whoscored.visible {
+  opacity: 1;
+}
+
+#hint-container {
+  display: grid;
+  grid-template-columns: repeat(3, 240px);
+  grid-template-rows: 1;
+  justify-items: center;
+  align-items: center;
+  margin: 10px;
+}
+
 #blindrank-container {
   display: grid;
   grid-template-rows: repeat(5, 120px);
