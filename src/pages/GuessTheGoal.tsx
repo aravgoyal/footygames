@@ -93,9 +93,9 @@ export function WhoScored() {
             </div>
             <h2>Lives: <span id="lives"></span></h2>
             <div id='hint-container'>
-                <h5><span id="hint2" className='fade-in hint'></span></h5>
+                <h5><span id="hint2" className='fade-in'></span></h5>
                 <h5><span id="hint1" className='hint'>Loading...</span></h5>
-                <h5><span id="hint3" className='fade-in hint'></span></h5>
+                <h5><span id="hint3" className='fade-in'></span></h5>
             </div>
             <input type="search" list="mylist" id="guess"></input>
             <button id="submit" onClick={submit}>Guess</button>
