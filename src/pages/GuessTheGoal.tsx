@@ -46,10 +46,10 @@ export function WhoScored() {
             lives -= 1;
         }
         if (lives == 2) {
-            hint2Display.textContent = "Nation: " + nation
+            hint2Display.textContent = nation
             hint2Display.classList.add('visible');
         } else if (lives == 1) {
-            hint3Display.textContent = "Club: " + club
+            hint3Display.textContent = club
             hint3Display.classList.add('visible');
         } else if (lives <= 0) {
             result.textContent = player
@@ -78,7 +78,7 @@ export function WhoScored() {
         livesDisplay.textContent = lives.toString()
 
         const hint1Display = document.getElementById("hint1") as HTMLSpanElement
-        hint1Display.textContent = "Position: " + position
+        hint1Display.textContent = position
     };
 
     useEffect(() => {
@@ -93,9 +93,9 @@ export function WhoScored() {
             </div>
             <h2>Lives: <span id="lives"></span></h2>
             <div id='hint-container'>
-                <h5><span id="hint2" className='fade-in'></span></h5>
+                <h5><span id="hint2" className='fade-in hint'></span></h5>
                 <h5><span id="hint1" className='hint'>Loading...</span></h5>
-                <h5><span id="hint3" className='fade-in'></span></h5>
+                <h5><span id="hint3" className='fade-in hint'></span></h5>
             </div>
             <input type="search" list="mylist" id="guess"></input>
             <button id="submit" onClick={submit}>Guess</button>
