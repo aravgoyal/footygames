@@ -117,6 +117,7 @@ export function TransferXI() {
     }, []);
 
     return (
+        <><a className="back-home" href="/">Home</a>
         <div className='transferxi'>
             <h1>Transfer XI</h1>
             <p>Goal: €1b</p>
@@ -141,6 +142,6 @@ export function TransferXI() {
             <h2 id="value-display">
                 Team Value: €<span id="total-value">0</span>m
             </h2>
-        </div>
+        </div></>
     );
 }

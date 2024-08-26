@@ -28,6 +28,7 @@ body {
   place-items: center;
   width: 100%;
   height: 100%;
+  overflow-x: hidden;
 }
 
 h1 {
@@ -37,7 +38,8 @@ h1 {
 
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: 1px solid;
+  border-color: #414141;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
@@ -45,9 +47,11 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
+  margin-left: 10px;
+  margin-top: 10px;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: #d1d1d1;
 }
 button:focus,
 button:focus-visible {
@@ -62,10 +66,15 @@ button:focus-visible {
 .hint {
   padding: 20px;
   margin: 20px;
-  border: 2px solid #999999;
+  border: 1px solid #414141;
   border-radius: 5px;
-  background-color: #521697;
+  background-color: #1a1a1a;
   width: 90px;
+  font-size: 24px;
+}
+
+#guess {
+  padding: 10px;
 }
 
 .fade-in {
@@ -73,10 +82,11 @@ button:focus-visible {
   transition: opacity 1s ease-in;
   padding: 20px;
   margin: 10px;
-  border: 2px solid #999999;
+  border: 1px solid #414141;
   border-radius: 5px;
-  background-color: #521697;
+  background-color: #1a1a1a;
   width: 90px;
+  font-size: 24px;
 }
 
 .fade-in.visible {
@@ -89,7 +99,7 @@ button:focus-visible {
 
 #hint-container {
   display: grid;
-  grid-template-columns: repeat(3, 240px);
+  grid-template-columns: repeat(3, 200px);
   grid-template-rows: 1;
   justify-items: center;
   align-items: center;
@@ -228,7 +238,11 @@ button:focus-visible {
 }
 
 .home {
+  padding-top: 40px;
+  position: relative;
   width: 209vh;
+  text-align: center;
+  right: 30px;
 }
 
 .option {
@@ -314,16 +328,63 @@ button.over {
   cursor: not-allowed;
 }
 
-.sidebar {
-  width: 100%;
-  position: relative;
-}
-
 #current-player {
   margin-top: 20px;
   font-size: 36px;
   font-weight: bold;
   width: 100%;
+}
+
+.nav-container {
+  width: 900px;
+  height: 300px;
+  margin-top: 40px;
+  left: 180px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.nav-game {
+  transition: linear 0.3s;
+  position: relative;
+  width: 200px;
+  height: 300px;
+  border-radius: 20px;
+  background-color: #363636;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-align: left;
+  border: 1px solid transparent;
+}
+
+.nav-game:hover {
+  transition: linear 0.2s;
+  width: 250px;
+  cursor: pointer;
+  background-color: #111111;
+  border-color: #adadad;
+}
+
+.nav-title {
+  font-size: 36px;
+  font-weight: 600;
+  color: #dfdfdf;
+  width: 180px;
+  pointer-events: none;
+  padding-left: 10px;
+}
+
+.nav-desc {
+  font-size: 12px;
+  color: #dfdfdf;
+  width: 180px;
+  pointer-events: none;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  font-weight: 500;
 }
 
 @media (prefers-color-scheme: light) {

@@ -89,7 +89,7 @@ export function BlindRank() {
     }, []);
 
     return (
-        <div>
+        <><a className="back-home" href="/">Home</a><div>
             <h1>Blind Rank</h1>
             <p>Rank current players!</p>
             <div id="blindrank-container">
@@ -100,6 +100,6 @@ export function BlindRank() {
                 <div className="rank" data-position="fifth">5</div>
             </div>
             <div id="current-player"></div>
-        </div>
+        </div></>
     );
 }

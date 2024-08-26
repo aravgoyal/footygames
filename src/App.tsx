@@ -1,11 +1,10 @@
 import './App.css'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home } from "./pages/Home.tsx";
-import { TransferXI } from "./pages/TransferXI.tsx"
-import { FiveASide } from './pages/FiveASide.tsx';
-import { BlindRank } from './pages/BlindRank.tsx';
-import { WhoScored } from './pages/GuessTheGoal.tsx';
-import { FootySidebar } from './Sidebar.tsx';
+import { Home } from "./components/Home.tsx";
+import { TransferXI } from "./components/TransferXI.tsx"
+import { FiveASide } from './components/FiveASide.tsx';
+import { BlindRank } from './components/BlindRank.tsx';
+import { WhoScored } from './components/GuessTheGoal.tsx';
 
 function App() {
 
@@ -13,7 +12,6 @@ function App() {
     <>
       <BrowserRouter>
         <div>
-        <FootySidebar/>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/transferxi" element={<TransferXI />} />

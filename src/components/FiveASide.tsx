@@ -153,7 +153,7 @@ export function FiveASide() {
     }, []);
 
     return (
-        <div>
+        <><a className="back-home" href="/">Home</a><div>
             <h1>Five-A-Side</h1>
             <p>Beat your opponent!</p>
             <div id="fiveaside-container">
@@ -174,6 +174,6 @@ export function FiveASide() {
                 <div className="option" data-option="3">Loading...</div>
             </div>
             <h2 id="result"></h2>
-        </div>
+        </div></>
     );
 }

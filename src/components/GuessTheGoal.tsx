@@ -86,10 +86,10 @@ export function WhoScored() {
     }, []);
 
     return (
-        <div>
+        <><a className="back-home" href="/">Home</a><div>
             <h1>Who Scored?</h1>
             <div>
-            <iframe id="videoPlayer" width="560" height="315" src={url} title="Who Scored?" frameBorder={0} allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                <iframe id="videoPlayer" width="560" height="315" src={url} title="Who Scored?" frameBorder={0} allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
             </div>
             <h2>Lives: <span id="lives"></span></h2>
             <div id='hint-container'>
@@ -100,6 +100,6 @@ export function WhoScored() {
             <input type="search" list="mylist" id="guess"></input>
             <button id="submit" onClick={submit}>Guess</button>
             <h2><span id="result" className='result-whoscored'></span></h2>
-        </div>
+        </div></>
     )
 }
